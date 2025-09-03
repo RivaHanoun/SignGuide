@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct signguidegammaApp: App {
+    @StateObject private var bluetoothManager = BluetoothManager()
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -26,6 +28,8 @@ struct signguidegammaApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(bluetoothManager)
+                .navigationViewStyle(StackNavigationViewStyle()) // to help with back buttons
         }
         .modelContainer(sharedModelContainer)
     }

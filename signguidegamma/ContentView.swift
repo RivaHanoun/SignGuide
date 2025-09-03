@@ -1,61 +1,93 @@
 //
 //  ContentView.swift
-//  signguidegamma
+//  signguide
 //
-//  Created by Riva on 1/14/25.
+//  Created by Riva on 10/18/24.
 //
 
 import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
-    var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+    @EnvironmentObject var bluetoothManager: BluetoothManager
+    var body: some View{
+        NavigationView {
+            ZStack {
+                //backgroud pic
+                Image("backgroundmenu")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                
+                //buttons
+                VStack{
+                    
+                    //title
+                    Text("SIGN GUIDE")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                        .padding(.top,50)
+                    
+                    Spacer()
+                    
+                    Text("Choose an Option")
+                        .font(.body)
+                        .foregroundColor(.black)
+                        .padding(.bottom)
+                    
+                    NavigationLink(destination: ConnectingView()
+                                    .environmentObject(bluetoothManager)){
+                        Text("Connect your Sign Guide")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 250)
+                            .background(Color.blue)
+                            .cornerRadius(10)
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                    .padding(.bottom, 10)
+                    
+                    NavigationLink(destination: LearningView()
+                                        .environmentObject(bluetoothManager)){
+                        Text("Start Learning")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 250)
+                            .background(Color.blue)
+                            .cornerRadius(10)
                     }
+                    .padding(.bottom, 10)
+                    NavigationLink(destination: SentenceView()
+                                   .environmentObject(bluetoothManager)){
+                        Text("Make Your Own Sentence")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 250)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                    
+                    Spacer()
                 }
+                .padding()
+                .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(true)
             }
-        } detail: {
-            Text("Select an item")
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
+    }
 }
