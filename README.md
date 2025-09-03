@@ -17,7 +17,7 @@ Connected to an iOS application (SwiftUI) that displays recognized letters in re
 4. Pair Bluetooth module with iPhone and run the app.
 
 ## Demo
-![Sign Guide Prototype](https://github.com/user-attachments/assets/d8744f61-fb8a-4699-9e0c-702c4768c090)
+![Sign Guide Prototype](https://github.com/user-attachments/assets/64e529b9-ece2-4406-a0d6-2315883789ca)
 https://youtu.be/MtStc8kh0Go?feature=shared
 
 ## Future Improvements
